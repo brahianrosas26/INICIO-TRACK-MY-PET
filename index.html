@@ -620,30 +620,112 @@ img{width:100%;display:block}
     grid-template-columns:1fr;
   }
 }
+
 .floating-whatsapp{
   position: fixed;
   right: 18px;
   bottom: 18px;
   width: 56px;
   height: 56px;
+  border: 0;
   border-radius: 50%;
   background: #25D366;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0px 10px rgba(0,0,0,.60);
-  z-index: 999;
-  transition: transform .2s ease;
-}
-
-.floating-whatsapp:hover{
-  transform: scale(1.08);
+  z-index: 1001;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,.28);
 }
 
 .floating-whatsapp img{
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   filter: brightness(0) invert(1);
+}
+
+.whatsapp-widget{
+  position: fixed;
+  right: 18px;
+  bottom: 88px;
+  width: min(340px, calc(100vw - 36px));
+  border-radius: 28px;
+  overflow: hidden;
+  background: rgba(255,255,255,.94);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 50px rgba(0,0,0,.18);
+  z-index: 1000;
+  display: none;
+}
+
+.whatsapp-widget.active{
+  display: block;
+}
+
+.whatsapp-widget-header{
+  background: #25D366;
+  color: white;
+  padding: 16px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.whatsapp-widget-header strong{
+  display: block;
+  font-size: 17px;
+}
+
+.whatsapp-widget-header span{
+  display: block;
+  font-size: 12px;
+  opacity: .9;
+  margin-top: 2px;
+}
+
+.whatsapp-widget-close{
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0,0,0,.18);
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.whatsapp-widget-body{
+  padding: 20px;
+}
+
+.whatsapp-message{
+  width: fit-content;
+  max-width: 86%;
+  background: white;
+  border-radius: 20px 20px 20px 6px;
+  padding: 14px 16px;
+  color: #3d4742;
+  font-size: 15px;
+  line-height: 1.35;
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+}
+
+.whatsapp-open-chat{
+  margin-top: 18px;
+  width: 100%;
+  border-radius: 999px;
+  padding: 15px 18px;
+  background: #25D366;
+  color: white;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.whatsapp-open-chat span{
+  font-size: 20px;
 }
 </style>
 </head>
@@ -1138,12 +1220,40 @@ function closeCart(){
 
 renderCart();
 </script>
-<a 
-  href="https://wa.me/59895080187?text=Hola%2C%20quiero%20comprar%20un%20TAG%20QR"
-  class="floating-whatsapp"
-  target="_blank"
->
+<button class="floating-whatsapp" onclick="toggleWhatsappWidget()" aria-label="Abrir WhatsApp">
   <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg">
-</a>
+</button>
+
+<div class="whatsapp-widget" id="whatsappWidget">
+  <div class="whatsapp-widget-header">
+    <div>
+      <strong>TrackMyPet</strong>
+      <span>Respondemos por WhatsApp</span>
+    </div>
+
+    <button onclick="toggleWhatsappWidget()" class="whatsapp-widget-close">×</button>
+  </div>
+
+  <div class="whatsapp-widget-body">
+    <div class="whatsapp-message">
+      Hola 👋<br>
+      ¿En qué podemos ayudarte?
+    </div>
+
+    <a 
+      class="whatsapp-open-chat"
+      href="https://wa.me/59895080187?text=Hola%2C%20quiero%20hacer%20una%20consulta%20sobre%20TrackMyPet"
+      target="_blank"
+    >
+      Abrir chat
+      <span>➜</span>
+    </a>
+  </div>
+</div>
+<script>
+function toggleWhatsappWidget(){
+  document.getElementById("whatsappWidget").classList.toggle("active");
+}
+</script>
 </body>
 </html>
