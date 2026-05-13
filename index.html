@@ -1008,21 +1008,43 @@ function setDelivery(type){
 }
 
 function updateWhatsappLink(){
+
   const total = getTotal();
 
   const detail = cart.map(item => {
     return `- ${item.quantity} x ${item.title} ($${item.price} c/u)`;
   }).join("\n");
 
+  let entregaTexto = "";
+
+  if(deliveryType === "retiro"){
+    entregaTexto = "• Retiro en tienda";
+  }
+
+  if(deliveryType === "montevideo"){
+    entregaTexto = "• Envío dentro de Montevideo (+$169)";
+  }
+
+  if(deliveryType === "interior"){
+    entregaTexto = "• Envío al interior (paga al recibir)";
+  }
+
+  if(deliveryType === "gratis"){
+    entregaTexto = "• Envío gratis a todo el país";
+  }
+
   const message =
 `Hola, quiero comprar:
 
 ${detail}
 
+${entregaTexto}
+
 Total: $${total}`;
 
   document.getElementById("transferBtn").href =
-    "https://wa.me/59895080187?text=" + encodeURIComponent(message);
+    "https://wa.me/59895080187?text=" +
+    encodeURIComponent(message);
 }
 
 function payWithMercadoPago(){
