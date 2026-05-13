@@ -760,8 +760,8 @@ img{width:100%;display:block}
     <div id="cartContent"></div>
 
     <div class="upsell" id="upsellBox">
-      <div class="upsell-title">Completá tu compra</div>
-      <div class="upsell-sub">Sumale un accesorio y llevate el TAG listo para usar.</div>
+<div class="upsell-title">Método de entrega</div>
+<div class="upsell-sub">Seleccioná cómo querés recibir tu pedido.</div>
       <div class="upsell-options" id="upsellOptions"></div>
     </div>
 
@@ -856,16 +856,17 @@ function removeFromCart(productId){
 }
 
 function getTotal(){
-  const subtotal = cart.reduce((sum,item) => sum + item.price * item.quantity, 0);
-  const count = getCount();
 
-  if(quiereEnvio && count > 0 && count < 4){
+  const subtotal =
+    cart.reduce((sum,item) =>
+      sum + item.price * item.quantity, 0);
+
+  if(deliveryType === "montevideo"){
     return subtotal + 169;
   }
 
   return subtotal;
 }
-
 function getCount(){
   return cart.reduce((sum,item) => sum + item.quantity, 0);
 }
@@ -912,33 +913,60 @@ function renderCart(){
   updateWhatsappLink();
 }
 
-let quiereEnvio = false;
+let deliveryType = "retiro";
 
 function renderUpsell(){
+
   const upsellBox = document.getElementById("upsellBox");
   const upsellOptions = document.getElementById("upsellOptions");
 
-  if(!hasProduct("tag")){
+  if(cart.length === 0){
     upsellBox.style.display = "none";
-    quiereEnvio = false;
     return;
   }
 
   upsellBox.style.display = "block";
 
   upsellOptions.innerHTML = `
+
     <label class="upsell-option" style="cursor:pointer;">
-      <input type="checkbox" ${quiereEnvio ? "checked" : ""} onchange="toggleEnvio(this.checked)">
+      <input type="radio" name="delivery" value="retiro"
+        ${deliveryType === "retiro" ? "checked" : ""}
+        onchange="setDelivery('retiro')">
+
       <div>
-        <strong>Agregar envío</strong>
-        <span>${getCount() >= 4 ? "Envío gratis incluido." : "Costo de envío: $169."}</span>
+        <strong>Retiro en tienda</strong>
+        <span>Sin costo.</span>
       </div>
     </label>
+
+    <label class="upsell-option" style="cursor:pointer;">
+      <input type="radio" name="delivery" value="montevideo"
+        ${deliveryType === "montevideo" ? "checked" : ""}
+        onchange="setDelivery('montevideo')">
+
+      <div>
+        <strong>Envío dentro de Montevideo</strong>
+        <span>$169.</span>
+      </div>
+    </label>
+
+    <label class="upsell-option" style="cursor:pointer;">
+      <input type="radio" name="delivery" value="interior"
+        ${deliveryType === "interior" ? "checked" : ""}
+        onchange="setDelivery('interior')">
+
+      <div>
+        <strong>Envío al interior</strong>
+        <span>Coordinado por WhatsApp.</span>
+      </div>
+    </label>
+
   `;
 }
 
-function toggleEnvio(value){
-  quiereEnvio = value;
+function setDelivery(type){
+  deliveryType = type;
   renderCart();
 }
 
@@ -991,7 +1019,10 @@ function payWithMercadoPago(){
     5: "https://mpago.la/2pGnXR9"
   };
 
-  const link = quiereEnvio ? linksConEnvio[quantity] : linksSinEnvio[quantity];
+const link =
+  deliveryType === "montevideo"
+    ? linksConEnvio[quantity]
+    : linksSinEnvio[quantity];
 
   if(link){
     window.location.href = link;
