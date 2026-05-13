@@ -1,10 +1,8 @@
-import { MercadoPagoConfig, Preference } from "mercadopago";
+import mercadopago from "mercadopago";
 
-const client = new MercadoPagoConfig({
-  accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN
+mercadopago.configure({
+  access_token: process.env.MERCADO_PAGO_ACCESS_TOKEN
 });
-
-const preference = new Preference(client);
 
 export default async function handler(req, res) {
 
@@ -18,22 +16,27 @@ export default async function handler(req, res) {
 
     const { items } = req.body;
 
-    const result = await preference.create({
-      body: {
-        items
-      }
-    });
+    const preference = {
+      items: items.map(item => ({
+        title: item.title,
+        quantity: Number(item.quantity),
+        currency_id: "UYU",
+        unit_price: Number(item.unit_price)
+      }))
+    };
+
+    const response = await mercadopago.preferences.create(preference);
 
     return res.status(200).json({
-      init_point: result.init_point
+      init_point: response.body.init_point
     });
 
   } catch (error) {
 
-    console.error(error);
+    console.error("ERROR MP:", error);
 
     return res.status(500).json({
-      error: "No se pudo crear el pago"
+      error: error.message || "No se pudo crear el pago"
     });
 
   }
