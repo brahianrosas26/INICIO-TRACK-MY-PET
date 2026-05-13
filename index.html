@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="es-UY">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TrackMyPet | TAG QR para mascotas</title>
+
+<style>
+:root{
+  --bg:#f4f7f2;
+  --text:#111816;
+  --muted:#6b756f;
+  --green:#2f8f5b;
+  --dark:#101714;
+  --shadow:0 22px 60px rgba(17,24,22,.12);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(circle at top left,#def4e5 0,transparent 32%),
+    radial-gradient(circle at bottom right,#efe4d2 0,transparent 30%),
+    var(--bg);
+  color:var(--text);
+}
+
+a{text-decoration:none;color:inherit}
+img{width:100%;display:block}
+
+.page{
+  width:min(100%,520px);
+  margin:auto;
+  padding-bottom:60px;
+}
+
+.nav{
+  height:100px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:950;
+  font-size:22px;
+  letter-spacing:-0.05em;
+}
+
+.brand-icon{
+  height:90px;
+  display: flex;
+  align-items:center;
+  margin-left: -18px;
+  margin-top: -10px;
+}
+
+.brand-icon img{
+  height:100%;
+  width:auto;
+  object-fit:contain;
+}
+
+.btn{
+  border:0;
+  border-radius:999px;
+  padding:14px 18px;
+  font-weight:900;
+  cursor:pointer;
+  font-size:14px;
+  text-align:center;
+}
+
+.btn-primary{
+  background:var(--green);
+  color:white;
+  box-shadow:0 14px 34px rgba(47,143,91,.25);
+}
+
+.btn-dark{
+  background:var(--dark);
+  color:white;
+}
+
+.btn-mercado{
+  background:#ffe600;
+  color:#263f8f;
+  box-shadow:0 14px 34px rgba(255,230,0,.28);
+}
+
+.hero{
+  padding:14px 18px 36px;
+}
+
+.badge{
+  display:inline-flex;
+  padding:10px 14px;
+  background:white;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:900;
+  color:#1f6d45;
+  box-shadow:0 10px 30px rgba(17,24,22,.06);
+}
+
+.hero h1{
+  margin-top:18px;
+  font-size:54px;
+  line-height:.92;
+  letter-spacing:-0.08em;
+}
+
+.hero h1 span{color:var(--green)}
+
+.hero p{
+  margin-top:18px;
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.5;
+}
+
+.hero-actions{
+  display:flex;
+  gap:10px;
+  margin-top:24px;
+}
+
+.hero-actions .btn{flex:1}
+
+.mockup{
+  margin-top:30px;
+  background:white;
+  border-radius:34px;
+  padding:16px;
+  box-shadow:var(--shadow);
+}
+
+.phone{
+  border-radius:28px;
+  overflow:hidden;
+  background:#111816;
+  color:white;
+  position:relative;
+}
+
+.phone img{
+  height:430px;
+  object-fit:cover;
+}
+
+.phone-content{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  padding:22px;
+  background:linear-gradient(to top,rgba(0,0,0,.78),transparent);
+}
+
+.status{
+  display:inline-flex;
+  background:#fff2d4;
+  color:#8d5d00;
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:12px;
+}
+
+.phone h2{
+  font-size:38px;
+  letter-spacing:-0.05em;
+}
+
+.phone p{
+  margin-top:8px;
+  color:rgba(255,255,255,.78);
+  font-size:15px;
+}
+
+.section{
+  padding:0 18px;
+  margin-top:36px;
+}
+
+.section-title{
+  font-size:34px;
+  letter-spacing:-0.06em;
+  line-height:.95;
+}
+
+.section-sub{
+  margin-top:12px;
+  color:var(--muted);
+  line-height:1.5;
+}
+
+.steps{
+  display:grid;
+  gap:14px;
+  margin-top:20px;
+}
+
+.step{
+  background:rgba(255,255,255,.82);
+  border-radius:28px;
+  padding:20px;
+  box-shadow:0 12px 34px rgba(17,24,22,.06);
+}
+
+.step-number{
+  width:38px;
+  height:38px;
+  border-radius:14px;
+  background:#e8f4ed;
+  color:#1f6d45;
+  display:grid;
+  place-items:center;
+  font-weight:950;
+  margin-bottom:14px;
+}
+
+.step h3{
+  font-size:21px;
+  letter-spacing:-0.04em;
+}
+
+.step p{
+  margin-top:8px;
+  color:var(--muted);
+}
+
+.products{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:22px;
+}
+
+.product{
+  background:white;
+  border-radius:26px;
+  overflow:hidden;
+  box-shadow:0 16px 42px rgba(17,24,22,.10);
+}
+
+.product-image{
+  height:145px;
+  background:#f5f6f3;
+}
+
+.product-image img{
+  height:100%;
+  object-fit:cover;
+}
+
+.product-body{
+  padding:14px;
+}
+
+.product-title{
+  font-size:20px;
+  letter-spacing:-0.05em;
+}
+
+.product-desc{
+  margin-top:6px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.35;
+  min-height:36px;
+}
+
+.buy-product{
+  width:100%;
+  margin-top:12px;
+  padding:13px;
+}
+
+.cart{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(12px);
+  z-index:999;
+  display:none;
+  align-items:end;
+}
+
+.cart.active{display:flex}
+
+.cart-box{
+  width:100%;
+  background:white;
+  border-radius:34px 34px 0 0;
+  padding:22px;
+  max-height:92vh;
+  overflow:auto;
+}
+
+.cart-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.cart-title{
+  font-size:30px;
+  letter-spacing:-0.06em;
+}
+
+.cart-close{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  border:0;
+  background:#f1f2ef;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.cart-list{
+  display:grid;
+  gap:12px;
+  margin-top:18px;
+}
+
+.cart-item{
+  display:grid;
+  grid-template-columns:72px 1fr auto;
+  gap:12px;
+  align-items:center;
+  background:#f5f6f3;
+  border-radius:22px;
+  padding:10px;
+}
+
+.cart-item img{
+  height:72px;
+  border-radius:18px;
+  object-fit:cover;
+}
+
+.cart-item h3{
+  font-size:17px;
+  letter-spacing:-0.04em;
+}
+
+.cart-item p{
+  margin-top:4px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.qty{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-top:8px;
+}
+
+.qty button{
+  width:26px;
+  height:26px;
+  border:0;
+  border-radius:50%;
+  background:var(--dark);
+  color:white;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.qty span{
+  font-weight:950;
+  min-width:18px;
+  text-align:center;
+}
+
+.remove{
+  border:0;
+  background:white;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  font-weight:950;
+  cursor:pointer;
+}
+
+.empty{
+  margin-top:18px;
+  padding:20px;
+  text-align:center;
+  color:var(--muted);
+  background:#f5f6f3;
+  border-radius:22px;
+}
+
+.upsell{
+  margin-top:18px;
+  background:#fff7e8;
+  border:1px solid #f3dfb9;
+  border-radius:24px;
+  padding:14px;
+  display:none;
+}
+
+.upsell-title{
+  font-size:18px;
+  font-weight:950;
+  letter-spacing:-0.03em;
+}
+
+.upsell-sub{
+  margin-top:5px;
+  color:#7a6b52;
+  font-size:13px;
+  line-height:1.35;
+}
+
+.upsell-options{
+  display:grid;
+  gap:10px;
+  margin-top:12px;
+}
+
+.upsell-option{
+  display:grid;
+  grid-template-columns:62px 1fr auto;
+  gap:10px;
+  align-items:center;
+  background:white;
+  border-radius:18px;
+  padding:10px;
+}
+
+.upsell-option img{
+  height:62px;
+  border-radius:14px;
+  object-fit:cover;
+}
+
+.upsell-option strong{
+  display:block;
+  font-size:14px;
+}
+
+.upsell-option span{
+  display:block;
+  margin-top:3px;
+  color:#7a6b52;
+  font-size:12px;
+}
+
+.upsell-option button{
+  border:0;
+  border-radius:999px;
+  background:var(--dark);
+  color:white;
+  font-weight:900;
+  padding:10px 12px;
+  font-size:12px;
+  cursor:pointer;
+}
+
+.total{
+  margin-top:18px;
+  padding:16px;
+  border-radius:20px;
+  background:#f5f6f3;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-weight:950;
+  font-size:20px;
+}
+
+.checkout{
+  display:grid;
+  gap:10px;
+  margin-top:18px;
+}
+
+.checkout .btn{
+  width:100%;
+}
+
+.final{
+  margin:44px 18px 0;
+  background:var(--dark);
+  color:white;
+  border-radius:34px;
+  padding:26px;
+  box-shadow:0 24px 70px rgba(17,24,22,.22);
+}
+
+.final h2{
+  font-size:34px;
+  line-height:.95;
+  letter-spacing:-0.07em;
+}
+
+.final p{
+  margin-top:14px;
+  color:rgba(255,255,255,.72);
+  line-height:1.5;
+}
+
+.final .btn{
+  width:100%;
+  margin-top:20px;
+}
+
+.footer{
+  margin-top:56px;
+  padding:0 18px 0px;
+  text-align:center;
+}
+
+.footer-box{
+  background:rgba(255,255,255,.78);
+  border-radius:34px;
+  padding:28px 18px 18px;
+  box-shadow:0 16px 44px rgba(17,24,22,.08);
+}
+
+.footer-logo{
+  height:78px;
+  width: 100%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+
+.footer-logo img{
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+.footer h3{
+  font-size:28px;
+  letter-spacing:-0.06em;
+}
+
+.footer p{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+}
+
+.socials{
+  display:grid;
+  gap:10px;
+  margin-top:22px;
+}
+
+.social-btn{
+  background:white;
+  border-radius:18px;
+  padding:14px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  box-shadow:0 10px 28px rgba(17,24,22,.06);
+}
+
+.social-icon{
+  width:26px;
+  height:26px;
+  display:inline-grid;
+  place-items:center;
+}
+
+.footer-copy{
+  margin-top:24px;
+  color:#8a948e;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.floating-cart{
+  position:fixed;
+  left:18px;
+  right:18px;
+  bottom:18px;
+  z-index:90;
+  max-width:484px;
+  margin:auto;
+  display:none;
+}
+
+.floating-cart.active{
+  display:block;
+}
+
+.floating-cart button{
+  width:100%;
+  border:0;
+  border-radius:24px;
+  padding:17px;
+  background:var(--dark);
+  color:white;
+  font-weight:950;
+  font-size:15px;
+  box-shadow:0 20px 60px rgba(17,24,22,.24);
+}
+
+@media(max-width:360px){
+  .products{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+<header class="nav">
+  <div class="brand">
+    <div class="brand-icon">
+      <img src="logo.png"></div>
+  </div>
+  <button class="btn btn-primary" onclick="scrollToProducts()">Comprar</button>
+</header>
+
+<section class="hero">
+  <div class="badge">✨ Identificación QR para mascotas</div>
+
+  <h1>Ayudá a que tu mascota <span>vuelva a casa.</span></h1>
+
+  <p>
+    Una chapita QR diseñada para actuar rápido cuando más importa.
+    Si alguien encuentra a tu mascota, podrá contactarte en segundos.
+  </p>
+
+  <div class="hero-actions">
+    <button class="btn btn-primary" onclick="scrollToProducts()">Comprar ahora</button>
+    <button class="btn btn-dark" onclick="document.querySelector('.section').scrollIntoView({behavior:'smooth'})">Ver cómo funciona</button>
+  </div>
+
+  <div class="mockup">
+    <div class="phone">
+      <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=900&q=80">
+      <div class="phone-content">
+        <div class="status">Estoy perdida</div>
+        <h2>Luna</h2>
+        <p>Mi familia me está buscando. Por favor ayudame a volver a casa ❤️</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section-title">Cómo funciona</h2>
+  <p class="section-sub">Simple, rápido y pensado para actuar cuando cada minuto importa.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-number">1</div>
+      <h3>Escaneás el QR</h3>
+      <p>Quien encuentre a tu mascota solo necesita abrir la cámara del celular.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <h3>Ve la ficha</h3>
+      <p>Accede al instante a fotos, WhatsApp, teléfono y datos importantes.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <h3>Te contacta rápido</h3>
+      <p>Para ayudarte a reencontrarte con tu mascota lo antes posible.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="productos">
+  <h2 class="section-title">Elegí tu TrackMyPet</h2>
+  <p class="section-sub">Comprá el TAG QR solo o llevatelo listo para usar.</p>
+
+  <div class="products">
+
+    <div class="product">
+      <div class="product-image">
+        <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=80">
+      </div>
+      <div class="product-body">
+        <h3 class="product-title">TAG QR</h3>
+        <p class="product-desc">Ideal para sumar a su collar actual.</p>
+        <button class="btn btn-primary buy-product" onclick="addToCart('tag')">Agregar</button>
+      </div>
+    </div>
+
+    <div class="product">
+      <div class="product-image">
+        <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=900&q=80">
+      </div>
+      <div class="product-body">
+        <h3 class="product-title">TAG QR + Collar</h3>
+        <p class="product-desc">La opción más práctica para empezar.</p>
+        <button class="btn btn-primary buy-product" onclick="addToCart('tag_collar')">Agregar</button>
+      </div>
+    </div>
+
+    <div class="product">
+      <div class="product-image">
+        <img src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=900&q=80">
+      </div>
+      <div class="product-body">
+        <h3 class="product-title">TAG QR + Pechera</h3>
+        <p class="product-desc">Más comodidad para paseos diarios.</p>
+        <button class="btn btn-primary buy-product" onclick="addToCart('tag_pechera')">Agregar</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="final">
+  <h2>Dale a tu mascota una forma más fácil de volver.</h2>
+  <p>TrackMyPet está pensado para esos momentos donde actuar rápido puede cambiarlo todo.</p>
+  <button class="btn btn-primary" onclick="scrollToProducts()">Comprar mi TAG</button>
+</section>
+
+<footer class="footer">
+  <div class="footer-box">
+    <div class="footer-logo">
+      <img src="logo1.png">
+    </div>
+    <p>Seguinos en nuestras redes sociales y conocé más sobre nuestros TAG QR para mascotas.</p>
+
+    <div class="socials">
+      <a class="social-btn" href="https://instagram.com/TUCUENTA" target="_blank">
+        <span class="social-icon">📸</span> Instagram
+      </a>
+
+      <a class="social-btn" href="https://tiktok.com/@TUCUENTA" target="_blank">
+        <span class="social-icon">🎵</span> TikTok
+      </a>
+
+      <a class="social-btn" href="https://facebook.com/TUCUENTA" target="_blank">
+        <span class="social-icon">f</span> Facebook
+      </a>
+    </div>
+
+    <div class="footer-copy">
+      © 2026 trackmypet.uy Todos los derechos reservados.<br>
+      Identificación QR para mascotas.
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<div class="floating-cart" id="floatingCart">
+  <button onclick="openCart()">
+    Ver carrito · <span id="floatingCount">0</span> productos · <span id="floatingTotal">$0</span>
+  </button>
+</div>
+
+<div class="cart" id="cart">
+  <div class="cart-box">
+
+    <div class="cart-head">
+      <h2 class="cart-title">Tu carrito</h2>
+      <button class="cart-close" onclick="closeCart()">×</button>
+    </div>
+
+    <div id="cartContent"></div>
+
+    <div class="upsell" id="upsellBox">
+      <div class="upsell-title">Completá tu compra</div>
+      <div class="upsell-sub">Sumale un accesorio y llevate el TAG listo para usar.</div>
+      <div class="upsell-options" id="upsellOptions"></div>
+    </div>
+
+    <div class="total">
+      <span>Total</span>
+      <span id="cartTotal">$0</span>
+    </div>
+
+    <div class="checkout">
+      <button class="btn btn-mercado" onclick="payWithMercadoPago()">💳 Pagar con Mercado Pago</button>
+      <a class="btn btn-dark" id="transferBtn" href="#" target="_blank">Comprar por transferencia</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const products = {
+  tag: {
+    id: "tag",
+    title: "TAG QR",
+    price: 390,
+    image: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=80"
+  },
+  tag_collar: {
+    id: "tag_collar",
+    title: "TAG QR + Collar",
+    price: 690,
+    image: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=900&q=80"
+  },
+  tag_pechera: {
+    id: "tag_pechera",
+    title: "TAG QR + Pechera",
+    price: 990,
+    image: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=900&q=80"
+  },
+  collar_extra: {
+    id: "collar_extra",
+    title: "Collar",
+    price: 300,
+    image: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=900&q=80"
+  },
+  pechera_extra: {
+    id: "pechera_extra",
+    title: "Pechera",
+    price: 600,
+    image: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=900&q=80"
+  }
+};
+
+let cart = [];
+
+function scrollToProducts(){
+  document.getElementById("productos").scrollIntoView({behavior:"smooth"});
+}
+
+function addToCart(productId){
+  const existing = cart.find(item => item.id === productId);
+
+  if(existing){
+    existing.quantity++;
+  } else {
+    cart.push({...products[productId], quantity:1});
+  }
+
+  renderCart();
+  openCart();
+}
+
+function increaseQty(productId){
+  const item = cart.find(item => item.id === productId);
+  if(item) item.quantity++;
+  renderCart();
+}
+
+function decreaseQty(productId){
+  const item = cart.find(item => item.id === productId);
+  if(!item) return;
+
+  item.quantity--;
+
+  if(item.quantity <= 0){
+    cart = cart.filter(item => item.id !== productId);
+  }
+
+  renderCart();
+}
+
+function removeFromCart(productId){
+  cart = cart.filter(item => item.id !== productId);
+  renderCart();
+}
+
+function getTotal(){
+  return cart.reduce((sum,item) => sum + item.price * item.quantity, 0);
+}
+
+function getCount(){
+  return cart.reduce((sum,item) => sum + item.quantity, 0);
+}
+
+function hasProduct(id){
+  return cart.some(item => item.id === id);
+}
+
+function renderCart(){
+  const cartContent = document.getElementById("cartContent");
+  const total = getTotal();
+  const count = getCount();
+
+  if(cart.length === 0){
+    cartContent.innerHTML = `<div class="empty">Tu carrito está vacío.</div>`;
+  } else {
+    cartContent.innerHTML = `
+      <div class="cart-list">
+        ${cart.map(item => `
+          <div class="cart-item">
+            <img src="${item.image}">
+            <div>
+              <h3>${item.title}</h3>
+              <p>$${item.price} c/u</p>
+              <div class="qty">
+                <button onclick="decreaseQty('${item.id}')">−</button>
+                <span>${item.quantity}</span>
+                <button onclick="increaseQty('${item.id}')">+</button>
+              </div>
+            </div>
+            <button class="remove" onclick="removeFromCart('${item.id}')">×</button>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  document.getElementById("cartTotal").innerText = "$" + total;
+  document.getElementById("floatingCount").innerText = count;
+  document.getElementById("floatingTotal").innerText = "$" + total;
+  document.getElementById("floatingCart").classList.toggle("active", count > 0);
+
+  renderUpsell();
+  updateWhatsappLink();
+}
+
+function renderUpsell(){
+  const upsellBox = document.getElementById("upsellBox");
+  const upsellOptions = document.getElementById("upsellOptions");
+
+  const shouldShowUpsell =
+    hasProduct("tag") &&
+    !hasProduct("tag_collar") &&
+    !hasProduct("tag_pechera");
+
+  if(!shouldShowUpsell){
+    upsellBox.style.display = "none";
+    return;
+  }
+
+  let options = [];
+
+  if(!hasProduct("collar_extra")){
+    options.push(products.collar_extra);
+  }
+
+  if(!hasProduct("pechera_extra")){
+    options.push(products.pechera_extra);
+  }
+
+  if(options.length === 0){
+    upsellBox.style.display = "none";
+    return;
+  }
+
+  upsellBox.style.display = "block";
+
+  upsellOptions.innerHTML = options.map(item => `
+    <div class="upsell-option">
+      <img src="${item.image}">
+      <div>
+        <strong>Agregar ${item.title}</strong>
+        <span>Sumalo ahora por $${item.price}.</span>
+      </div>
+      <button onclick="addToCart('${item.id}')">Agregar</button>
+    </div>
+  `).join("");
+}
+
+function updateWhatsappLink(){
+  const total = getTotal();
+
+  const detail = cart.map(item => {
+    return `- ${item.quantity} x ${item.title} ($${item.price} c/u)`;
+  }).join("\n");
+
+  const message =
+`Hola, quiero comprar:
+
+${detail}
+
+Total: $${total}`;
+
+  document.getElementById("transferBtn").href =
+    "https://wa.me/598XXXXXXXX?text=" + encodeURIComponent(message);
+}
+
+async function payWithMercadoPago(){
+  if(cart.length === 0){
+    alert("Tu carrito está vacío.");
+    return;
+  }
+
+  try {
+    const response = await fetch("/api/create-payment", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        items: cart.map(item => ({
+          title: item.title,
+          quantity: item.quantity,
+          unit_price: item.price
+        }))
+      })
+    });
+
+    const data = await response.json();
+
+    if(!response.ok || !data.init_point){
+      alert("No se pudo crear el pago. Probá por transferencia.");
+      return;
+    }
+
+    window.location.href = data.init_point;
+
+  } catch(error) {
+    console.error(error);
+    alert("Error al conectar con Mercado Pago. Probá por transferencia.");
+  }
+}
+
+function openCart(){
+  document.getElementById("cart").classList.add("active");
+}
+
+function closeCart(){
+  document.getElementById("cart").classList.remove("active");
+}
+
+renderCart();
+</script>
+
+</body>
+</html>
