@@ -772,7 +772,7 @@ img{width:100%;display:block}
 
     <div class="checkout">
       <button class="btn btn-mercado" onclick="payWithMercadoPago()">💳 Pagar con Mercado Pago</button>
-      <button class="btn btn-dark" id="transferBtn" onclick="buyTransfer()">🏦 Pagar con transferencia</a>
+      <button class="btn btn-dark" id="transferBtn" onclick="buyTransfer()">🏦 Pagar con transferencia</button>
     </div>
 
   </div>
@@ -906,13 +906,17 @@ function renderCart(){
   document.getElementById("floatingTotal").innerText = "$" + total;
   document.getElementById("floatingCart").classList.toggle("active", count > 0);
 
-  renderUpsell();
+   renderUpsell();
+
   const mpButton = document.querySelector(".btn-mercado");
 
-if(mpButton){
-  mpButton.style.display = count > 5 ? "none" : "block";
-}
+  if(mpButton){
+    mpButton.style.display = count > 5 ? "none" : "block";
+  }
+
   updateWhatsappLink();
+}
+
 function buyTransfer(){
 
   if(cart.length === 0){
@@ -1010,11 +1014,6 @@ function renderUpsell(){
   `;
 }
 
-function setDelivery(type){
-  deliveryType = type;
-  renderCart();
-}
-  
 function setDelivery(type){
   deliveryType = type;
   renderCart();
