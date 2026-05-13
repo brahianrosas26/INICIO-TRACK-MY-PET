@@ -1,6 +1,6 @@
 {
   "type": "module",
   "dependencies": {
-    "mercadopago": "^2.8.0"
+    "mercadopago": "^1.5.17"
   }
 }
