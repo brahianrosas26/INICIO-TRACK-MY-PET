@@ -703,28 +703,6 @@ img{width:100%;display:block}
         <button class="btn btn-primary buy-product" onclick="addToCart('tag')">Agregar</button>
       </div>
     </div>
-<!--
-    <div class="product">
-      <div class="product-image">
-        <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=900&q=80">
-      </div>
-      <div class="product-body">
-        <h3 class="product-title">TAG QR + Collar</h3>
-        <p class="product-desc">La opción más práctica para empezar.</p>
-        <button class="btn btn-primary buy-product" onclick="addToCart('tag_collar')">Agregar</button>
-      </div>
-    </div>
-
-    <div class="product">
-      <div class="product-image">
-        <img src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=900&q=80">
-      </div>
-      <div class="product-body">
-        <h3 class="product-title">TAG QR + Pechera</h3>
-        <p class="product-desc">Más comodidad para paseos diarios.</p>
-        <button class="btn btn-primary buy-product" onclick="addToCart('tag_pechera')">Agregar</button>
-      </div>
-    </div> --!>
 
   </div>
 </section>
@@ -878,7 +856,14 @@ function removeFromCart(productId){
 }
 
 function getTotal(){
-  return cart.reduce((sum,item) => sum + item.price * item.quantity, 0);
+  const subtotal = cart.reduce((sum,item) => sum + item.price * item.quantity, 0);
+  const count = getCount();
+
+  if(quiereEnvio && count > 0 && count < 4){
+    return subtotal + 169;
+  }
+
+  return subtotal;
 }
 
 function getCount(){
@@ -927,47 +912,34 @@ function renderCart(){
   updateWhatsappLink();
 }
 
+let quiereEnvio = false;
+
 function renderUpsell(){
   const upsellBox = document.getElementById("upsellBox");
   const upsellOptions = document.getElementById("upsellOptions");
 
-  const shouldShowUpsell =
-    hasProduct("tag") &&
-    !hasProduct("tag_collar") &&
-    !hasProduct("tag_pechera");
-
-  if(!shouldShowUpsell){
+  if(!hasProduct("tag")){
     upsellBox.style.display = "none";
-    return;
-  }
-
-  let options = [];
-
-  if(!hasProduct("collar_extra")){
-    options.push(products.collar_extra);
-  }
-
-  if(!hasProduct("pechera_extra")){
-    options.push(products.pechera_extra);
-  }
-
-  if(options.length === 0){
-    upsellBox.style.display = "none";
+    quiereEnvio = false;
     return;
   }
 
   upsellBox.style.display = "block";
 
-  upsellOptions.innerHTML = options.map(item => `
-    <div class="upsell-option">
-      <img src="${item.image}">
+  upsellOptions.innerHTML = `
+    <label class="upsell-option" style="cursor:pointer;">
+      <input type="checkbox" ${quiereEnvio ? "checked" : ""} onchange="toggleEnvio(this.checked)">
       <div>
-        <strong>Agregar ${item.title}</strong>
-        <span>Sumalo ahora por $${item.price}.</span>
+        <strong>Agregar envío</strong>
+        <span>${getCount() >= 4 ? "Envío gratis incluido." : "Costo de envío: $169."}</span>
       </div>
-      <button onclick="addToCart('${item.id}')">Agregar</button>
-    </div>
-  `).join("");
+    </label>
+  `;
+}
+
+function toggleEnvio(value){
+  quiereEnvio = value;
+  renderCart();
 }
 
 function updateWhatsappLink(){
@@ -1002,8 +974,6 @@ function payWithMercadoPago(){
   }
 
   const quantity = cart[0].quantity;
-
-  const quiereEnvio = confirm("¿Querés agregar envío?");
 
   const linksSinEnvio = {
     1: "https://mpago.la/1T9pmvJ",
