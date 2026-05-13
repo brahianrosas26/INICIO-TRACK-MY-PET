@@ -970,44 +970,6 @@ function renderUpsell(){
   `).join("");
 }
 
-function updateWhatsappLink(){
-  const total = getTotal();
-
-  const detail = cart.map(item => {
-    return `- ${item.quantity} x ${item.title} ($${item.price} c/u)`;
-  }).join("\n");
-
-  const message =
-`Hola, quiero comprar:
-
-${detail}
-
-Total: $${total}`;
-
-  document.getElementById("transferBtn").href =
-    "https://wa.me/598XXXXXXXX?text=" + encodeURIComponent(message);
-}
-/*
-async function payWithMercadoPago(){
-  if(cart.length === 0){
-    alert("Tu carrito está vacío.");
-    return;
-  }
-
-  try {
-    const response = await fetch("/api/create-payment", {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({
-        items: cart.map(item => ({
-          title: item.title,
-          quantity: item.quantity,
-          unit_price: item.price
-        }))
-      })
-    });
-
-    const data = await response.json(); */
 function payWithMercadoPago(){
 
   if(cart.length === 0){
@@ -1051,29 +1013,6 @@ function payWithMercadoPago(){
   alert("Para más de 5 TAGs, coordinamos el pago por WhatsApp.");
   window.location.href = document.getElementById("transferBtn").href;
 }
-
-if(!response.ok || !data.init_point){
-  alert("Respuesta Mercado Pago: " + JSON.stringify(data));
-  return;
-}
-
-    window.location.href = data.init_point;
-
-  } catch(error) {
-    console.error(error);
-    alert("Error al conectar con Mercado Pago. Probá por transferencia.");
-  }
-}
-
-function openCart(){
-  document.getElementById("cart").classList.add("active");
-}
-
-function closeCart(){
-  document.getElementById("cart").classList.remove("active");
-}
-
-renderCart();
 </script>
 
 </body>
