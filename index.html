@@ -987,7 +987,7 @@ Total: $${total}`;
   document.getElementById("transferBtn").href =
     "https://wa.me/598XXXXXXXX?text=" + encodeURIComponent(message);
 }
-
+/*
 async function payWithMercadoPago(){
   if(cart.length === 0){
     alert("Tu carrito está vacío.");
@@ -1007,7 +1007,50 @@ async function payWithMercadoPago(){
       })
     });
 
-    const data = await response.json();
+    const data = await response.json(); */
+function payWithMercadoPago(){
+
+  if(cart.length === 0){
+    alert("Tu carrito está vacío.");
+    return;
+  }
+
+  if(cart.length !== 1 || cart[0].id !== "tag"){
+    alert("Por ahora Mercado Pago está disponible solo para TAG QR. Para otros pedidos te llevamos a WhatsApp.");
+    window.location.href = document.getElementById("transferBtn").href;
+    return;
+  }
+
+  const quantity = cart[0].quantity;
+
+  const quiereEnvio = confirm("¿Querés agregar envío?");
+
+  const linksSinEnvio = {
+    1: "https://mpago.la/1T9pmvJ",
+    2: "https://mpago.la/2TCURJL",
+    3: "https://mpago.la/1nb7MSx",
+    4: "https://mpago.la/2jouduh",
+    5: "https://mpago.la/2pGnXR9"
+  };
+
+  const linksConEnvio = {
+    1: "https://mpago.la/141i9Hk",
+    2: "https://mpago.la/29ykxzw",
+    3: "https://mpago.la/1bjdJYr",
+    4: "https://mpago.la/2jouduh",
+    5: "https://mpago.la/2pGnXR9"
+  };
+
+  const link = quiereEnvio ? linksConEnvio[quantity] : linksSinEnvio[quantity];
+
+  if(link){
+    window.location.href = link;
+    return;
+  }
+
+  alert("Para más de 5 TAGs, coordinamos el pago por WhatsApp.");
+  window.location.href = document.getElementById("transferBtn").href;
+}
 
 if(!response.ok || !data.init_point){
   alert("Respuesta Mercado Pago: " + JSON.stringify(data));
