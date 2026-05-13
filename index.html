@@ -703,7 +703,7 @@ img{width:100%;display:block}
         <button class="btn btn-primary buy-product" onclick="addToCart('tag')">Agregar</button>
       </div>
     </div>
-
+/*
     <div class="product">
       <div class="product-image">
         <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=900&q=80">
@@ -724,7 +724,7 @@ img{width:100%;display:block}
         <p class="product-desc">Más comodidad para paseos diarios.</p>
         <button class="btn btn-primary buy-product" onclick="addToCart('tag_pechera')">Agregar</button>
       </div>
-    </div>
+    </div> */
 
   </div>
 </section>
@@ -805,7 +805,7 @@ const products = {
   tag: {
     id: "tag",
     title: "TAG QR",
-    price: 390,
+    price: 590,
     image: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=80"
   },
   tag_collar: {
@@ -988,40 +988,49 @@ Total: $${total}`;
     "https://wa.me/598XXXXXXXX?text=" + encodeURIComponent(message);
 }
 
-async function payWithMercadoPago(){
+function payWithMercadoPago(){
+
   if(cart.length === 0){
     alert("Tu carrito está vacío.");
     return;
   }
 
-  try {
-    const response = await fetch("/api/create-payment", {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({
-        items: cart.map(item => ({
-          title: item.title,
-          quantity: item.quantity,
-          unit_price: item.price
-        }))
-      })
-    });
-
-    const data = await response.json();
-
-if(!response.ok || !data.init_point){
-  alert("Respuesta Mercado Pago: " + JSON.stringify(data));
-  return;
-}
-
-    window.location.href = data.init_point;
-
-  } catch(error) {
-    console.error(error);
-    alert("Error al conectar con Mercado Pago. Probá por transferencia.");
+  if(cart.length !== 1 || cart[0].id !== "tag"){
+    alert("Por ahora Mercado Pago está disponible solo para TAG QR. Para otros pedidos te llevamos a WhatsApp.");
+    window.location.href = document.getElementById("transferBtn").href;
+    return;
   }
-}
 
+  const quantity = cart[0].quantity;
+
+  const quiereEnvio = confirm("¿Querés agregar envío?");
+
+  const linksSinEnvio = {
+    1: "https://mpago.la/1T9pmvJ",
+    2: "https://mpago.la/2TCURJL",
+    3: "https://mpago.la/1nb7MSx",
+    4: "https://mpago.la/2jouduh",
+    5: "https://mpago.la/2pGnXR9"
+  };
+
+  const linksConEnvio = {
+    1: "https://mpago.la/141i9Hk",
+    2: "https://mpago.la/29ykxzw",
+    3: "https://mpago.la/1bjdJYr",
+    4: "https://mpago.la/2jouduh",
+    5: "https://mpago.la/2pGnXR9"
+  };
+
+  const link = quiereEnvio ? linksConEnvio[quantity] : linksSinEnvio[quantity];
+
+  if(link){
+    window.location.href = link;
+    return;
+  }
+
+  alert("Para más de 5 TAGs, coordinamos el pago por WhatsApp.");
+  window.location.href = document.getElementById("transferBtn").href;
+}
 function openCart(){
   document.getElementById("cart").classList.add("active");
 }
