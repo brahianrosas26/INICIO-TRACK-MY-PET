@@ -12,6 +12,10 @@ export default async function handler(req, res) {
     });
   }
 
+  console.log("TOKEN EXISTE:", !!process.env.MERCADO_PAGO_ACCESS_TOKEN);
+console.log("TOKEN INICIO:", process.env.MERCADO_PAGO_ACCESS_TOKEN?.slice(0, 12));
+console.log("TOKEN LARGO:", process.env.MERCADO_PAGO_ACCESS_TOKEN?.length);
+
   try {
 
     const { items } = req.body;
