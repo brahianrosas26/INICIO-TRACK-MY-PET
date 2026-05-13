@@ -772,7 +772,7 @@ img{width:100%;display:block}
 
     <div class="checkout">
       <button class="btn btn-mercado" onclick="payWithMercadoPago()">💳 Pagar con Mercado Pago</button>
-      <a class="btn btn-dark" id="transferBtn" href="#" target="_blank">🏦 Pagar con transferencia</a>
+      <button class="btn btn-dark" id="transferBtn" onclick="buyTransfer()">🏦 Pagar con transferencia</a>
     </div>
 
   </div>
@@ -913,6 +913,19 @@ if(mpButton){
   mpButton.style.display = count > 5 ? "none" : "block";
 }
   updateWhatsappLink();
+function buyTransfer(){
+
+  if(cart.length === 0){
+    alert("Tu carrito está vacío.");
+    return;
+  }
+
+  window.open(
+    document.getElementById("transferBtn").dataset.href,
+    "_blank"
+  );
+}
+
 }
 
 let deliveryType = "retiro";
@@ -1042,7 +1055,7 @@ ${entregaTexto}
 
 Total: $${total}`;
 
-  document.getElementById("transferBtn").href =
+  document.getElementById("transferBtn").dataset.href =
     "https://wa.me/59895080187?text=" +
     encodeURIComponent(message);
 }
