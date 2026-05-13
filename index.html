@@ -1009,10 +1009,10 @@ async function payWithMercadoPago(){
 
     const data = await response.json();
 
-    if(!response.ok || !data.init_point){
-      alert("No se pudo crear el pago. Probá por transferencia.");
-      return;
-    }
+if(!response.ok || !data.init_point){
+  alert("Respuesta Mercado Pago: " + JSON.stringify(data));
+  return;
+}
 
     window.location.href = data.init_point;
 
