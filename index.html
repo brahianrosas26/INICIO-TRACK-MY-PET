@@ -856,12 +856,9 @@ function removeFromCart(productId){
 }
 
 function getTotal(){
+  const subtotal = cart.reduce((sum,item) => sum + item.price * item.quantity, 0);
 
-  const subtotal =
-    cart.reduce((sum,item) =>
-      sum + item.price * item.quantity, 0);
-
-  if(deliveryType === "montevideo"){
+  if(deliveryType === "montevideo" && getCount() < 4){
     return subtotal + 169;
   }
 
@@ -910,6 +907,11 @@ function renderCart(){
   document.getElementById("floatingCart").classList.toggle("active", count > 0);
 
   renderUpsell();
+  const mpButton = document.querySelector(".btn-mercado");
+
+if(mpButton){
+  mpButton.style.display = count > 6 ? "none" : "block";
+}
   updateWhatsappLink();
 }
 
@@ -919,6 +921,7 @@ function renderUpsell(){
 
   const upsellBox = document.getElementById("upsellBox");
   const upsellOptions = document.getElementById("upsellOptions");
+  const count = getCount();
 
   if(cart.length === 0){
     upsellBox.style.display = "none";
@@ -926,6 +929,35 @@ function renderUpsell(){
   }
 
   upsellBox.style.display = "block";
+
+  if(count >= 4){
+    upsellOptions.innerHTML = `
+
+      <label class="upsell-option" style="cursor:pointer;">
+        <input type="radio" name="delivery" value="retiro"
+          ${deliveryType === "retiro" ? "checked" : ""}
+          onchange="setDelivery('retiro')">
+
+        <div>
+          <strong>Retiro en tienda</strong>
+          <span>Sin costo.</span>
+        </div>
+      </label>
+
+      <label class="upsell-option" style="cursor:pointer;">
+        <input type="radio" name="delivery" value="gratis"
+          ${deliveryType === "gratis" ? "checked" : ""}
+          onchange="setDelivery('gratis')">
+
+        <div>
+          <strong>Envío gratis a todo el país</strong>
+          <span>Incluido por compras de 4 TAGs o más.</span>
+        </div>
+      </label>
+
+    `;
+    return;
+  }
 
   upsellOptions.innerHTML = `
 
@@ -958,13 +990,18 @@ function renderUpsell(){
 
       <div>
         <strong>Envío al interior</strong>
-        <span>Coordinado por WhatsApp.</span>
+        <span>Se paga al recibir, según la agencia elegida.</span>
       </div>
     </label>
 
   `;
 }
 
+function setDelivery(type){
+  deliveryType = type;
+  renderCart();
+}
+  
 function setDelivery(type){
   deliveryType = type;
   renderCart();
@@ -1020,7 +1057,7 @@ function payWithMercadoPago(){
   };
 
 const link =
-  deliveryType === "montevideo"
+  deliveryType === "montevideo" && quantity < 4
     ? linksConEnvio[quantity]
     : linksSinEnvio[quantity];
 
