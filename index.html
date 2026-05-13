@@ -1066,7 +1066,7 @@ function payWithMercadoPago(){
 
   if(cart.length !== 1 || cart[0].id !== "tag"){
     alert("Por ahora Mercado Pago está disponible solo para TAG QR. Para otros pedidos te llevamos a WhatsApp.");
-    window.location.href = document.getElementById("transferBtn").href;
+    window.location.href = document.getElementById("transferBtn").dataset.href;
     return;
   }
 
