@@ -29,9 +29,9 @@ export default async function handler(req, res) {
       body: {
         items: validItems,
         back_urls: {
-          success: "https://TU-DOMINIO.com",
-          failure: "https://TU-DOMINIO.com",
-          pending: "https://TU-DOMINIO.com"
+          success: "https://inicio-track-my-pet.vercel.app/",
+          failure: "https://inicio-track-my-pet.vercel.app/",
+          pending: "https://inicio-track-my-pet.vercel.app/"
         },
         auto_return: "approved"
       }
